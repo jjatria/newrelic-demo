@@ -1,0 +1,188 @@
+openapi: 3.0.0
+info:
+  title: NewFangle::Agent Demo Server
+  description: |
+    A sample server to illustrate the Perl integration with NewFangle::Agent
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /{bucket}:
+    get:
+      summary: |
+        Fetches a list of all documents in a bucket
+      parameters:
+        - name: bucket
+          description: |
+            Name of the bucket where the document is stored.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Document was found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+                    example: false
+                  documents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the document
+
+        404:
+          description: Document was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+                    example: false
+                  error:
+                    type: string
+                    example: Splines were not reticulated
+
+    put:
+      summary: |
+        Create a bucket. This action is idempotent.
+      parameters:
+        - name: bucket
+          description: |
+            Name of the bucket to create
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Bucket was created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+                    example: true
+
+    delete:
+      summary: |
+        Delete a bucket and all the documents it contains
+      parameters:
+        - name: bucket
+          description: |
+            Name of the bucket where the document is stored.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Bucket was deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+                    example: true
+
+  /{bucket}/{document}:
+    get:
+      summary: |
+        Fetches a previously stored document
+      parameters:
+        - name: bucket
+          description: |
+            Name of the bucket where the document is stored.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: document
+          description: |
+            Name of the stored document
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Document was found
+        404:
+          description: Document was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+                    example: false
+                  error:
+                    type: string
+                    example: Splines were not reticulated
+
+    put:
+      summary: |
+        Store a document in the specified bucket
+      parameters:
+        - name: bucket
+          description: |
+            Name of the bucket where the document is stored.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: doc
+          description: |
+            Name of the stored document
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Document was stored
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+                    example: true
+
+    delete:
+      summary: |
+        Delete a document in the specified bucket. This operation is idempotent.
+      parameters:
+        - name: bucket
+          description: |
+            Name of the bucket where the document is stored.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: doc
+          description: |
+            Name of the document to delete
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Request was successful.

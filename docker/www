@@ -1,0 +1,10 @@
+FROM perl:5.34 AS base
+
+WORKDIR /app
+
+RUN cpanm -nq Carton
+
+FROM base
+
+COPY cpanfile cpanfile.snapshot ./
+RUN carton install --path /usr/local

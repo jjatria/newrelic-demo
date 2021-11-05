@@ -1,0 +1,21 @@
+services:
+    www:
+        build:
+            context: .
+            dockerfile: ./docker/www
+        environment:
+            PERL5LIB: /app/lib:/usr/local/lib/perl5
+            PANOP_DB_DSN: mysql://site:84aaa213dbb7aa3d67d57ba49acc2a71b7c4cd8bf689bfdf4372e4a34dceeca0@db/panop
+        env_file: ./env
+        entrypoint:
+            - morbo
+            - /app/script/panop
+        ports:
+            - 3000:3000
+        volumes:
+            - .:/app
+
+    db:
+        build:
+            context: .
+            dockerfile: ./docker/db

@@ -1,0 +1,4 @@
+USE panop;
+CREATE TABLE bucket (
+    id VARCHAR(255) NOT NULL PRIMARY KEY
+);

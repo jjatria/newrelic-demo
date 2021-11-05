@@ -1,0 +1,6 @@
+*.swp
+*.swo
+local/
+public/api.html
+.cpanm/
+env
