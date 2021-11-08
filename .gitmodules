@@ -1,0 +1,3 @@
+[submodule "vendor/NewFangle-Agent"]
+	path = vendor/NewFangle-Agent
+	url = https://github.com/cv-library/NewFangle-Agent.git

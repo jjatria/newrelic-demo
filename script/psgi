@@ -1,0 +1,12 @@
+#!/usr/bin/env plackup -s FCGI
+
+use Mojo::Server::PSGI;
+use Plack::Builder;
+
+builder {
+    enable 'NewFangle';
+
+    my $server = Mojo::Server::PSGI->new;
+    $server->build_app('Panop');
+    $server->to_psgi_app;
+};

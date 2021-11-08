@@ -1,0 +1,41 @@
+enabled: true
+
+environments:
+    # A 'realistic' environment
+    # We only track business code, and only on failing
+    # apdex transactions.
+    production:
+        transaction_tracer:
+            include:
+                paths:
+                    - /app/lib
+
+    # A development environment
+    # We still only track business code, but with
+    # increased logging and we track transactions based on
+    # duration, with a very low threshold
+    development:
+        log_level: debug
+        transaction_tracer:
+            threshold: is_over_duration
+            duration: 0.001
+            stack_trace_threshold: 0.001
+            include:
+                paths:
+                    - /app/lib
+
+    # A debugging environment, mostly for demo
+    # We track almost all the code, with the most logging
+    # to illustrate the capacities of the solution
+    debug:
+        log_level: trace
+        transaction_tracer:
+            threshold: is_over_duration
+            duration: 0.001
+            stack_trace_threshold: 0.001
+            exclude:
+                # Silence some particularly noisy packages
+                paths:
+                    - /usr/local/lib/perl5/5.34.0/x86_64-linux-gnu/IO/Select.pm
+                    - /usr/local/lib/perl5/Net/Server/PreFork.pm
+                    - /usr/local/lib/perl5/Net/Server/PreForkSimple.pm

@@ -5,9 +5,12 @@ start: snapshot api
 	docker-compose up --build -d --remove-orphans
 	docker-compose restart www
 
-snapshot:
+snapshot: cpanfile
 	docker build . --tag panop:builder --target base --file docker/www
 	docker run --rm --env 'PERL_CPANM_HOME=/app/.cpanm' --user "${UID}:${GID}" --volume "${PWD}":/app panop:builder carton install
+
+cpanfile:
+	( cat cpanfile.local; find vendor -name "cpanfile" -exec cat {} \; ) > cpanfile
 
 stop:
 	docker-compose down --remove-orphans

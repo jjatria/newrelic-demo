@@ -4,14 +4,22 @@ services:
             context: .
             dockerfile: ./docker/www
         environment:
-            PERL5LIB: /app/lib:/usr/local/lib/perl5
             PANOP_DB_DSN: mysql://site:84aaa213dbb7aa3d67d57ba49acc2a71b7c4cd8bf689bfdf4372e4a34dceeca0@db/panop
+            PERL5LIB: /app/lib:/usr/local/lib/perl5:/app/vendor/NewFangle-Agent/lib
+            NEWRELIC_APP_NAME: Panop
+            NEWRELIC_DAEMON_HOST: newrelic:31339
+            NEWRELIC_CONFIG_FILE: /app/newrelic.yml
+            NEWRELIC_ENVIRONMENT: development
+            # NEWRELIC_ENVIRONMENT: debug
         env_file: ./env
         entrypoint:
-            - morbo
-            - /app/script/panop
+            - starman
+            - --preload-app
+            - -R
+            - /app/lib
+            - /app/script/psgi
         ports:
-            - 3000:3000
+            - 5000:5000
         volumes:
             - .:/app
 
@@ -19,3 +27,6 @@ services:
         build:
             context: .
             dockerfile: ./docker/db
+
+    newrelic:
+        image: newrelic/c-daemon
