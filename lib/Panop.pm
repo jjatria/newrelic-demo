@@ -1,5 +1,6 @@
 package Panop;
 
+use NewFangle::Agent;
 use Mojo::Base 'Mojolicious', -signatures;
 
 sub startup ($self) {
