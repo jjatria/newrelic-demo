@@ -5,8 +5,121 @@ info:
     A sample server to illustrate the Perl integration with NewFangle::Agent
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:5000
 paths:
+  /config:
+    get:
+      summary: |
+        Render the local settings available to the New Relic agent.
+      description: |
+          Foo bar.
+
+          Barr _baz_.
+      responses:
+        200:
+          description: Request was successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  app_name:
+                    type: string
+                    description: The name of the New Relic app
+                    example: My App
+                  daemon_host:
+                    type: string
+                    description: The host and port of the New Relic daemon
+                    example: daemon:31339
+                  enabled:
+                    type: bool
+                    description: Controls whether the feature is enabled
+                    example: true
+                  license_key:
+                    type: string
+                    description: The license key used to identify your account
+                    example: eu01xx0123456789abcdef0123456789abcdNRAL
+                  log_filename:
+                    type: string
+                    description: The path to a filename used for logging
+                    example: stderr
+                  log_level:
+                    type: string
+                    enum:
+                      - critical
+                      - error
+                      - warning
+                      - debug
+                      - trace
+                    description: The level of logging
+                    example: error
+                  transaction_tracer:
+                    type: object
+                    description: Transaction tracing configuration
+                    properties:
+                      duration:
+                        type: number
+                        description: Transaction duration threshold in seconds
+                        example: 0.001
+                      enabled:
+                        type: bool
+                        description: Controls whether the feature is enabled
+                      exclude:
+                        type: object
+                        properties:
+                          paths:
+                            type: array
+                            items:
+                              type: string
+                          subroutines:
+                            type: object
+                          subpackages:
+                            type: object
+                      include:
+                        type: object
+                        properties:
+                          paths:
+                            type: array
+                            items:
+                              type: string
+                          subroutines:
+                            type: object
+                          subpackages:
+                            type: object
+                      stack_trace_threshold:
+                        type: number
+                        description: ...
+                        example: 0.001
+                      threshold:
+                        type: string
+                        enum:
+                          - is_over_duration
+                          - is_apdex_failing
+                      database_reporting:
+                        type: object
+                        properties:
+                          enabled:
+                            type: bool
+                            description: Controls whether the feature is enabled
+                            example: true
+                          record_sql:
+                            type: string
+                            enum:
+                              - obfuscated
+                            description: ...
+                          threshold:
+                            type: number
+                            description: ...
+                            example: 0.5
+
+                  distributed_tracing:
+                    type: object
+                    description: Ditributed tracing configuration
+                    properties:
+                      enabled:
+                        type: bool
+                        example: true
+
   /{bucket}:
     get:
       summary: |
