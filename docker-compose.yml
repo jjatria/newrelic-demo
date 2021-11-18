@@ -11,6 +11,8 @@ services:
             NEWRELIC_CONFIG_FILE: /app/newrelic.yml
             NEWRELIC_ENVIRONMENT: development
             # NEWRELIC_ENVIRONMENT: debug
+        depends_on:
+            - db
         env_file: ./env
         entrypoint:
             - starman
