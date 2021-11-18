@@ -11,10 +11,6 @@ paths:
     get:
       summary: |
         Render the local settings available to the New Relic agent.
-      description: |
-          Foo bar.
-
-          Barr _baz_.
       responses:
         200:
           description: Request was successful.
