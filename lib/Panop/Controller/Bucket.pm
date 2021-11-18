@@ -27,7 +27,7 @@ sub read ($self) {
 }
 
 sub delete ($self) {
-    Panop::Model::Bucket->new( id => $self->param('db') )->delete;
+    Panop::Model::Bucket->new( id => $self->param('bucket') )->delete;
     $self->render( json => { ok => \1 } );
 }
 
