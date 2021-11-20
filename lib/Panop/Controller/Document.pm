@@ -20,7 +20,7 @@ sub read ($self) {
     );
 
     return $self->reply
-        ->exception('Document was not found'),
+        ->exception('Document was not found')
         ->rendered(404)
         unless $doc->exists;
 
